@@ -1,5 +1,12 @@
 package com.example.sync;
 
+/**
+ * PLACEHOLDER. No está integrado con la app real.
+ * El package com.example.sync y las clases ChatActivity y SettingsActivity
+ * no existen en com.barrantesco.syncengine. No cablear intents hasta conocer
+ * el package, las activities y el contrato de navegación.
+ */
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;

@@ -1,1 +1,0 @@
-- Widget Sync Engine: la hora prima. El mark S-infinito va pequeño, como luz de estado, nunca como hero. Prohibido wordmark “Sync Engine” / “Barrantes Co.”. El usuario quiere hora, archivo recibido y portapapeles, no publicidad de marca. [2026-10-08]

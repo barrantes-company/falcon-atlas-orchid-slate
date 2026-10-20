@@ -48,12 +48,14 @@ function Home() {
         {panel === "archivos" ? (
           <List
             title="Archivos"
+            note="DEMO · lista de muestra. No son archivos del dispositivo."
             rows={["Contrato.pdf · listo", "Notas.m4a · listo", "Foto-0841.jpg · en tránsito"]}
           />
         ) : null}
         {panel === "portapapeles" ? (
           <List
             title="Portapapeles"
+            note="DEMO · lista de muestra. No es el portapapeles del sistema."
             rows={["Texto copiado hace 2 min", "Enlace copiado hace 18 min", "Código de acceso hace 1 h"]}
           />
         ) : null}
@@ -62,10 +64,11 @@ function Home() {
   );
 }
 
-function List({ title, rows }: { title: string; rows: string[] }) {
+function List({ title, note, rows }: { title: string; note: string; rows: string[] }) {
   return (
     <div className="w-full max-w-md">
       <h1 className="text-2xl font-extrabold tracking-tight">{title}</h1>
+      <p className="mt-2 text-xs text-mist">{note}</p>
       <ul className="mt-4 grid gap-2">
         {rows.map((row) => (
           <li key={row} className="rounded-2xl bg-panel px-4 py-3 text-base font-medium">

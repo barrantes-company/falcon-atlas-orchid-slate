@@ -9,15 +9,32 @@
   --color-ion: #ffffff;
   --color-line: #2a2a2a;
   --color-gilt: #ffffff;
+  --color-status-error: #ffb4b4;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Sora", ui-sans-serif, system-ui, sans-serif;
   --radius-capsule: 2.25rem;
+}
+
+:root {
+  --motion-fast: 140ms;
+  --motion-normal: 220ms;
+  --motion-event: 360ms;
+  --motion-alert: 180ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --trail-rest: 1;
 }
 
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
+  }
+
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [role="switch"]:focus-visible {
+    outline: 2px solid var(--color-gilt);
+    outline-offset: 3px;
   }
 
   html,
@@ -34,6 +51,7 @@
 }
 
 .clock-face {
+  font-size: clamp(3.4rem, 18vw, 6rem);
   line-height: 0.9;
 }
 
@@ -42,15 +60,26 @@
 }
 
 .base-glow {
-  background: radial-gradient(120% 80% at 50% 100%, color-mix(in srgb, var(--color-ion) 16%, transparent), transparent 70%);
+  background: radial-gradient(120% 80% at 50% 100%, color-mix(in srgb, var(--color-ion) 10%, transparent), transparent 70%);
 }
 
-.mark-live {
-  opacity: 0.9;
+.status-line {
+  margin-top: 0.65rem;
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  color: var(--color-mist);
 }
 
-.dot-live {
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.55);
+.status-error {
+  color: var(--color-status-error);
+}
+
+.trails-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
 .trails {
@@ -59,39 +88,106 @@
   z-index: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.58;
   pointer-events: none;
 }
 
-.trails-live {
-  animation: trails-flash 700ms ease;
+.trail-ink {
+  opacity: var(--trail-rest);
 }
 
-@keyframes trails-flash {
+.trail-particles {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.trail-energy {
+  stroke-opacity: 0.28;
+  animation-name: energy-flow;
+  animation-duration: var(--flow, 5s);
+  animation-delay: var(--flow-delay, 0s);
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.trail-fx-spark {
+  stroke-dasharray: 16 1624;
+}
+
+.trail-fx-return {
+  stroke-dasharray: 28 1612;
+  animation-direction: reverse;
+}
+
+.trail-fx-twin {
+  stroke-dasharray: 22 210 22 1386;
+}
+
+.trail-fx-swell {
+  stroke-dasharray: 280 1360;
+}
+
+@keyframes energy-flow {
+  to {
+    stroke-dashoffset: -1640;
+  }
+}
+
+.trails-strong {
+  --trail-rest: 1;
+}
+
+.trails-strong .trail-energy {
+  stroke-opacity: 0.45;
+}
+
+.trails-strong .trail-energy-glow {
+  stroke-opacity: 1;
+}
+
+.trails-live .trail-sheen {
+  animation: trail-pass var(--motion-event) var(--ease-out);
+}
+
+.trail-sheen {
+  opacity: 0;
+  transform-box: view-box;
+  transform-origin: 0 50%;
+}
+
+@keyframes trail-pass {
+  0% {
+    opacity: 0;
+    transform: translateX(-8%);
+  }
+  30% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(115%);
+  }
+}
+
+.trails-ack {
+  animation: trails-ack var(--motion-alert) ease;
+}
+
+@keyframes trails-ack {
   40% {
-    opacity: 0.78;
-    filter: brightness(1.25);
+    opacity: 0.7;
   }
 }
 
 .count-live {
-  animation: count-pop 700ms ease;
+  animation: count-pop var(--motion-event) var(--ease-out);
 }
 
-.badge {
-  display: grid;
-  min-width: 1.15rem;
-  height: 1.15rem;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--color-ion) 50%, transparent);
-  border-radius: 999px;
-  background: transparent;
-  padding: 0 4px;
-  color: var(--color-ion);
-  font-size: 10px;
-  font-weight: 600;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
+@keyframes count-pop {
+  35% {
+    transform: scale(1.12);
+  }
 }
 
 .note-mark {
@@ -108,7 +204,6 @@
 }
 
 .note-fresh {
-  border-color: transparent;
   background: linear-gradient(90deg, color-mix(in srgb, var(--color-gilt) 10%, transparent), transparent 70%);
 }
 
@@ -118,33 +213,12 @@
   flex: none;
   border-radius: 999px;
   background: var(--color-gilt);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--color-gilt) 70%, transparent);
-}
-
-@keyframes count-pop {
-  35% {
-    transform: scale(1.16);
-    color: var(--color-ion);
-  }
-}
-
-.rise-late {
-  animation-delay: 120ms;
-}
-
-.rise-later {
-  animation-delay: 220ms;
 }
 
 .hit {
   transition:
-    transform 160ms ease,
-    border-color 160ms ease,
-    opacity 160ms ease;
-}
-
-.hit:hover {
-  border-color: color-mix(in srgb, var(--color-gilt) 50%, transparent);
+    transform var(--motion-fast) ease,
+    opacity var(--motion-fast) ease;
 }
 
 .hit:active {
@@ -169,7 +243,9 @@
   height: 16px;
   border-radius: 999px;
   background: var(--color-mist);
-  transition: transform 160ms ease, background 160ms ease;
+  transition:
+    transform var(--motion-fast) ease,
+    background var(--motion-fast) ease;
 }
 
 .switch-on {
@@ -181,75 +257,8 @@
   background: var(--color-ion);
 }
 
-.hit:focus-visible {
-  outline: 2px solid var(--color-gilt);
-  outline-offset: 3px;
-}
-
-@property --btn-turn {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-.open-btn {
-  position: relative;
-  transition:
-    transform 180ms ease,
-    background-color 180ms ease,
-    box-shadow 180ms ease,
-    color 180ms ease;
-}
-
-.open-btn:hover:not(:disabled) {
-  background-color: color-mix(in srgb, var(--color-gilt) 16%, transparent);
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--color-gilt) 22%, transparent);
-  color: var(--color-ink);
-  transform: translateY(-2px);
-}
-
-.open-btn:hover:not(:disabled)::before {
-  animation-duration: 1.6s;
-}
-
-.open-btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(from var(--btn-turn), transparent 0 70%, var(--color-gilt) 84%, transparent 96%);
-  pointer-events: none;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  animation: btn-turn 4.2s linear infinite;
-}
-
-.open-btn:active {
-  animation: btn-press 280ms ease;
-}
-
-.open-btn:disabled::before {
-  animation: none;
-  opacity: 0;
-}
-
-@keyframes btn-turn {
-  to {
-    --btn-turn: 360deg;
-  }
-}
-
-@keyframes btn-press {
-  40% {
-    transform: scale(0.94);
-  }
-}
-
 .rise {
-  animation: rise 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: rise var(--motion-event) var(--ease-out) both;
 }
 
 @keyframes rise {
@@ -272,13 +281,33 @@
 @media (prefers-reduced-motion: reduce) {
   .rise,
   .hit,
-  .open-btn,
-  .open-btn::before,
-  .trails-live,
+  .trails-live .trail-sheen,
+  .trail-energy,
   .count-live,
   .switch::after {
     animation: none;
     transition: none;
   }
+
+  .trail-energy {
+    opacity: 0;
+  }
 }
 
+.motion-quiet .rise,
+.motion-quiet .hit,
+.motion-quiet .trails-live .trail-sheen,
+.motion-quiet .trail-energy,
+.motion-quiet .count-live,
+.motion-quiet .switch::after {
+  animation: none;
+  transition: none;
+}
+
+.motion-quiet .trail-energy {
+  opacity: 0;
+}
+
+.motion-quiet .trails-ack {
+  animation: trails-ack var(--motion-alert) ease;
+}
