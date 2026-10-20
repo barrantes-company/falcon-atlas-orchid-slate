@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Widget</title>
+  <style>
+    :root {
+      --void: #000000;
+      --body: #06090e;
+      --card: #0a121c;
+      --line: rgba(160, 210, 255, 0.28);
+      --cyan: #40d6ff;
+      --text: #ffffff;
+      --muted: #a8becc;
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      background: var(--void);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+    }
+    body {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 28px 16px;
+    }
+    .stage {
+      width: min(360px, 100%);
+    }
+    .widget {
+      position: relative;
+      min-height: 560px;
+      padding: 22px 20px 18px;
+      border-radius: 36px;
+      background:
+        radial-gradient(120% 42% at 50% 100%, rgba(64, 214, 255, 0.28) 0%, rgba(20, 70, 110, 0.12) 42%, transparent 72%),
+        linear-gradient(180deg, #0b1018 0%, var(--body) 58%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.45),
+        inset 0 -18px 32px rgba(64, 214, 255, 0.08),
+        0 24px 48px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+    .widget::before {
+      content: "";
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      top: 7px;
+      height: 18px;
+      border-radius: 20px 20px 40px 40px;
+      border-top: 1.5px solid rgba(255, 255, 255, 0.55);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-height: 36px;
+    }
+    .mark {
+      width: 42px;
+      height: 32px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(64, 214, 255, 0.45));
+    }
+    .widget[data-state="offline"] .mark {
+      filter: grayscale(1) brightness(0.55);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 8px rgba(64, 214, 255, 0.7);
+    }
+    .widget[data-state="offline"] .dot {
+      background: #ff5d6c;
+      box-shadow: none;
+    }
+    .status b {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      font-weight: 700;
+      color: #b7e6f8;
+    }
+    .clock {
+      margin: 28px 0 0;
+      text-align: center;
+      font-size: 72px;
+      line-height: 0.9;
+      font-weight: 760;
+      letter-spacing: -0.04em;
+      font-variant-numeric: tabular-nums;
+    }
+    .date {
+      margin: 10px 0 0;
+      text-align: center;
+      color: var(--muted);
+      font-size: 15px;
+      text-transform: lowercase;
+    }
+    .rows {
+      display: grid;
+      gap: 10px;
+      margin-top: 36px;
+    }
+    .row {
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(10, 18, 28, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      animation: rise 0.45s var(--ease) both;
+    }
+    .row:nth-child(2) { animation-delay: 0.06s; }
+    .row span {
+      display: block;
+      color: #7ec8f0;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+    .row strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .open {
+      width: 100%;
+      margin-top: 78px;
+      height: 46px;
+      border-radius: 14px;
+      border: 1px solid rgba(90, 180, 230, 0.35);
+      background: #070c12;
+      color: #d5e8f4;
+      font-size: 15px;
+      font-weight: 650;
+      cursor: pointer;
+    }
+    .open:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 2px;
+    }
+    .hint {
+      margin: 14px 0 0;
+      text-align: center;
+      color: #667887;
+      font-size: 12px;
+    }
+    button.link {
+      background: none;
+      border: 0;
+      color: #8fd8f5;
+      cursor: pointer;
+      font: inherit;
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .row { animation: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <article class="widget" data-state="online">
+      <div class="status">
+        <img class="mark" src="mark-only.png" alt="">
+        <i class="dot"></i>
+        <b id="state-label">EN LÍNEA</b>
+      </div>
+      <p class="clock" id="clock">21:40</p>
+      <p class="date" id="date">jueves 8 oct</p>
+      <div class="rows">
+        <div class="row">
+          <span>Archivo</span>
+          <strong>Listo en el otro dispositivo</strong>
+        </div>
+        <div class="row">
+          <span>Portapapeles</span>
+          <strong>Texto copiado hace 2 min</strong>
+        </div>
+      </div>
+      <button class="open" type="button">Abrir</button>
+    </article>
+    <p class="hint"><button class="link" id="toggle" type="button">Simular corte</button></p>
+  </div>
+  <script>
+    const clock = document.getElementById("clock");
+    const date = document.getElementById("date");
+    const widget = document.querySelector(".widget");
+    const label = document.getElementById("state-label");
+    const days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+    const months = ["ene", "feb", "mar", "abr", "may", "jun", "jul", "ago", "sep", "oct", "nov", "dic"];
+    function tick() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString("es-PE", { hour: "2-digit", minute: "2-digit", hour12: false });
+      date.textContent = days[now.getDay()] + " " + now.getDate() + " " + months[now.getMonth()];
+    }
+    tick();
+    setInterval(tick, 1000);
+    document.getElementById("toggle").addEventListener("click", () => {
+      const off = widget.dataset.state === "online";
+      widget.dataset.state = off ? "offline" : "online";
+      label.textContent = off ? "SIN ENLACE" : "EN LÍNEA";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Enlace",
+      "hasCanvas": false,
+      "bodyTextLen": 142,
+      "bodyTextHash": "649dd0c3d70dc27d50a1feb1dc59ff432e711df4242366b954a950df25f26a4a",
+      "bodyTextPrefix": "MENÚ Widget Archivos Portapapeles EN LÍNEA 10:05 jueves 8 oct Ar",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Enlace",
+      "hasCanvas": false,
+      "bodyTextLen": 137,
+      "bodyTextHash": "4b7f0f3fd2dd885db546e9b224ee9310085ca010bc5910f4da878445d23725c9",
+      "bodyTextPrefix": "Widget Archivos Portapapeles EN LÍNEA 10:05 jueves 8 oct Archivo",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

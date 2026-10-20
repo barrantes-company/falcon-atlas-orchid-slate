@@ -1,0 +1,38 @@
+{
+  "url": "http://127.0.0.1:8081",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Enlace",
+      "hasCanvas": false,
+      "bodyTextLen": 75,
+      "bodyTextHash": "87b68e0bcb3c58577c2c37998d63c41007d6e03c15ec8459b48c9704f4534712",
+      "bodyTextPrefix": "MENÚ Widget Archivos Portapapeles 07:27 jueves 8 oct 3 mensajes ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Enlace",
+      "hasCanvas": false,
+      "bodyTextLen": 70,
+      "bodyTextHash": "1b32c27cbec1be8e594975070572bb8bd932a30889c0dd7d815b80607449bb92",
+      "bodyTextPrefix": "Widget Archivos Portapapeles 07:27 jueves 8 oct 3 mensajes · 1 l",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-built-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-built.json",
+  "divergesFromBaseline": false,
+  "baselineReasons": []
+}
